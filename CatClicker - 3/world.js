@@ -8,10 +8,43 @@ var cat5 = new Cat("cat5", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9
 
 var cats = [cat1, cat2, cat3, cat4, cat5];
 
-var catList = document.getElementById("catList");
+document.addEventListener("DOMContentLoaded", function(event) {
+    cats.forEach(function(cat){
+      var catItem = document.createElement("li");
 
-cats.forEach(function(cat){
-  var catItem = document.createElement("li");
-  catItem.appendChild(document.createTextNode(cat.name));
-  catList.appendChild(catItem);
+      var catItemName = document.createElement("span");
+      catItemName.appendChild(document.createTextNode(cat.name));
+      catItemName.addEventListener("click", function(){
+            changeDisplayCat(cat.name);
+      });
+
+      catItem.appendChild(catItemName);
+      var catList = document.getElementById("catList");
+      catList.appendChild(catItem);
+    });
 });
+
+function changeDisplayCat(catName){
+    var cat = getCat(catName);
+
+    var catNameElement = document.getElementById("catName");
+    catNameElement.innerHTML = cat.name;
+
+    var catImgElement = document.getElementById("catImg");
+    catImgElement.src = cat.image;
+
+    var catClicksElement = document.getElementById("catClicks");
+    catClicksElement.innerHTML = cat.nClicks;
+}
+
+function updateClicks(catName){
+    var cat = getCat(catName);
+    var catClicksElement = document.getElementById("catClicks");
+    catClicksElement.innerHTML = cat.nClicks;
+}
+
+function getCat(catName){
+    return cats.find(function(cat){
+        return cat.name === catName;
+    });
+}
