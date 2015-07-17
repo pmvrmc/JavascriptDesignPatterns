@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script type="text/javascript" src="src/LunchDecider.js"></script>
+        <script type="text/javascript" src="src/WhereIsLunch.js"></script>
+        <title>Lunch Notifier!</title>
+    </head>
+
+    <input id="lunchSpot" type="text"/>
+    <button type="button" name="button" onclick="changeLunchPlace()">LUNCH TIME</button>
+
+    <body>
+        <script>
+        var publisher = new LunchDecider();
+        var sub1 = new WhereIsLunch(publisher);
+        var sub2 = new WhereIsLunch(publisher);
+        var sub3 = new WhereIsLunch(publisher);
+        var sub4 = new WhereIsLunch(publisher);
+        publisher.subscribe("LUNCH", sub1);
+        publisher.subscribe("LUNCH", sub2);
+        publisher.subscribe("LUNCH", sub3);
+        publisher.subscribe("LUNCH", sub4);
+
+        publisher.changeLunchPlace("Honorato");
+
+        function changeLunchPlace(){
+            publisher.publish("LUNCH", document.getElementById("lunchSpot").value);
+        }
+        </script>
+    </body>
+</html>
